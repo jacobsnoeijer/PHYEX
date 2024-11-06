@@ -42,50 +42,50 @@ MODULE MODE_RAIN_ICE_OLD_SEDIMENTATION_SPLIT
     INTEGER, INTENT(IN) :: IKB
     INTEGER, INTENT(IN) :: KSPLITR ! Number of small time step
 
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PDZZ     ! Layer thickness (m)
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRHODJ   ! Dry density * Jacobian
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRHODREF ! Reference density
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PPABST  ! absolute pressure at t
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PDZZ     ! Layer thickness (m)
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRHODJ   ! Dry density * Jacobian
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRHODREF ! Reference density
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PPABST  ! absolute pressure at t
 
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PTHT ! Theta at time t
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRCT ! Cloud water m.r. at t
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRRT ! Rain water m.r. at t
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRST ! Snow/aggregate m.r. at t
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRGT ! Graupel/hail m.r. at t
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PTHT ! Theta at time t
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRCT ! Cloud water m.r. at t
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRRT ! Rain water m.r. at t
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRST ! Snow/aggregate m.r. at t
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRGT ! Graupel/hail m.r. at t
 
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRCS ! Cloud water m.r. source
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRRS ! Rain water m.r. source
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRIS ! Pristine ice m.r. source
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRSS ! Snow/aggregate m.r. source
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRGS ! Graupel m.r. source
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT) :: PRCS ! Cloud water m.r. source
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT) :: PRRS ! Rain water m.r. source
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT) :: PRIS ! Pristine ice m.r. source
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT) :: PRSS ! Snow/aggregate m.r. source
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT) :: PRGS ! Graupel m.r. source
 
-    REAL, DIMENSION(D%NIT),       INTENT(OUT) :: PINPRC ! Cloud instant precip
-    REAL, DIMENSION(D%NIT),       INTENT(OUT) :: PINPRR ! Rain instant precip
-    REAL, DIMENSION(D%NIT),       INTENT(OUT) :: PINPRS ! Snow instant precip
-    REAL, DIMENSION(D%NIT),       INTENT(OUT) :: PINPRG ! Graupel instant precip
+    REAL, DIMENSION(D%NIJT),       INTENT(OUT) :: PINPRC ! Cloud instant precip
+    REAL, DIMENSION(D%NIJT),       INTENT(OUT) :: PINPRR ! Rain instant precip
+    REAL, DIMENSION(D%NIJT),       INTENT(OUT) :: PINPRS ! Snow instant precip
+    REAL, DIMENSION(D%NIJT),       INTENT(OUT) :: PINPRG ! Graupel instant precip
 
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN) :: ZRAY    ! Cloud Mean radius
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN) :: ZLBC    ! XLBC weighted by sea fraction
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN) :: ZFSEDC
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN) :: ZCONC3D !  droplet concentration m-3
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN) :: ZRAY    ! Cloud Mean radius
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN) :: ZLBC    ! XLBC weighted by sea fraction
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN) :: ZFSEDC
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN) :: ZCONC3D !  droplet concentration m-3
 
-    REAL, DIMENSION(D%NIT,D%NKT),     OPTIONAL, INTENT(IN)    :: PRHT   ! Hail m.r. at t
-    REAL, DIMENSION(D%NIT,D%NKT),     OPTIONAL, INTENT(INOUT) :: PRHS   ! Hail m.r. source
-    REAL, DIMENSION(D%NIT),           OPTIONAL, INTENT(OUT)   :: PINPRH ! Hail instant precip
-    REAL, DIMENSION(D%NIT,D%NKT,KRR), OPTIONAL, INTENT(OUT)   :: PFPR   ! upper-air precipitation fluxes
+    REAL, DIMENSION(D%NIJT,D%NKT),     OPTIONAL, INTENT(IN)    :: PRHT   ! Hail m.r. at t
+    REAL, DIMENSION(D%NIJT,D%NKT),     OPTIONAL, INTENT(INOUT) :: PRHS   ! Hail m.r. source
+    REAL, DIMENSION(D%NIJT),           OPTIONAL, INTENT(OUT)   :: PINPRH ! Hail instant precip
+    REAL, DIMENSION(D%NIJT,D%NKT,KRR), OPTIONAL, INTENT(OUT)   :: PFPR   ! upper-air precipitation fluxes
 
-    REAL, DIMENSION(D%NIT,D%NKT) :: ZPRCS,ZPRRS,ZPRSS,ZPRGS,ZPRHS ! Mixing ratios created during the time step
+    REAL, DIMENSION(D%NIJT,D%NKT) :: ZPRCS,ZPRRS,ZPRSS,ZPRGS,ZPRHS ! Mixing ratios created during the time step
     INTEGER :: ISEDIMR, ISEDIMC, ISEDIMI, ISEDIMS, ISEDIMG, ISEDIMH
 
-    REAL, DIMENSION(D%NIT, 0:D%NKT+1) :: ZWSED ! sedimentation fluxes
+    REAL, DIMENSION(D%NIJT, 0:D%NKT+1) :: ZWSED ! sedimentation fluxes
 
-    LOGICAL, DIMENSION(D%NIT,D%NKT) :: GSEDIMR,GSEDIMC, GSEDIMI, GSEDIMS, GSEDIMG, GSEDIMH ! Test where to compute the SED processes
-    INTEGER, DIMENSION(D%NIT*D%NKT) :: IC1, IC2
-    INTEGER, DIMENSION(D%NIT*D%NKT) :: IR1, IR2
-    INTEGER, DIMENSION(D%NIT*D%NKT) :: IS1, IS2
-    INTEGER, DIMENSION(D%NIT*D%NKT) :: II1, II2
-    INTEGER, DIMENSION(D%NIT*D%NKT) :: IG1, IG2
-    INTEGER, DIMENSION(D%NIT*D%NKT) :: IH1, IH2
+    LOGICAL, DIMENSION(D%NIJT,D%NKT) :: GSEDIMR,GSEDIMC, GSEDIMI, GSEDIMS, GSEDIMG, GSEDIMH ! Test where to compute the SED processes
+    INTEGER, DIMENSION(D%NIJT*D%NKT) :: IC1, IC2
+    INTEGER, DIMENSION(D%NIJT*D%NKT) :: IR1, IR2
+    INTEGER, DIMENSION(D%NIJT*D%NKT) :: IS1, IS2
+    INTEGER, DIMENSION(D%NIJT*D%NKT) :: II1, II2
+    INTEGER, DIMENSION(D%NIJT*D%NKT) :: IG1, IG2
+    INTEGER, DIMENSION(D%NIJT*D%NKT) :: IH1, IH2
 
     INTEGER :: ILISTLENC, ILISTLENR, ILISTLENI, ILISTLENS, ILISTLENG, ILISTLENH
 
@@ -118,7 +118,7 @@ MODULE MODE_RAIN_ICE_OLD_SEDIMENTATION_SPLIT
     REAL, DIMENSION(KSIZE) :: ZRAY1D    ! Mean radius
     REAL, DIMENSION(KSIZE) :: ZWLBDA    ! Libre parcours moyen
 
-    REAL, DIMENSION(D%NIT, D%NKT) :: ZW ! work array
+    REAL, DIMENSION(D%NIJT, D%NKT) :: ZW ! work array
 
     REAL, DIMENSION(KSIZE) :: ZZT       ! Temperature
     REAL, DIMENSION(KSIZE) :: ZPRES     ! Pressure
@@ -129,7 +129,7 @@ MODULE MODE_RAIN_ICE_OLD_SEDIMENTATION_SPLIT
     REAL    :: ZTSPLITR ! Small time step for rain sedimentation
     REAL    :: ZINVTSTEP
 
-    INTEGER :: JN, JL, JK, JI, JM
+    INTEGER :: JN, JL, JK, JIJ, JM
 
     REAL(KIND=JPHOOK) :: ZHOOK_HANDLE
 !
@@ -201,8 +201,8 @@ MODULE MODE_RAIN_ICE_OLD_SEDIMENTATION_SPLIT
           PRGS(D%NIB:D%NIE,:) = PRGS(D%NIB:D%NIE,:) + ZPRGS(D%NIB:D%NIE,:)/KSPLITR
         IF ( KRR == 7 ) PRHS(D%NIB:D%NIE,:) = PRHS(D%NIB:D%NIE,:) + ZPRHS(D%NIB:D%NIE,:)/KSPLITR
         DO JK = D%NKTB , D%NKTE
-          DO JI = D%NIB , D%NIE
-            ZW(JI,JK) =ZTSPLITR/(PRHODREF(JI,JK)* PDZZ(JI,JK))
+          DO JIJ = D%NIJB , D%NIJE
+            ZW(JIJ,JK) =ZTSPLITR/(PRHODREF(JIJ,JK)* PDZZ(JIJ,JK))
           END DO
         END DO
       ELSE
@@ -213,18 +213,18 @@ MODULE MODE_RAIN_ICE_OLD_SEDIMENTATION_SPLIT
         IF ( KRR == 7 ) PRHS(D%NIB:D%NIE,:) = PRHS(D%NIB:D%NIE,:) + ZPRHS(D%NIB:D%NIE,:)*ZTSPLITR
       END IF
  !
-      IF (OSEDIC) GSEDIMC(D%NIB:D%NIE,D%NKTB:D%NKTE) =                &
-                      PRCS(D%NIB:D%NIE,D%NKTB:D%NKTE)>ZRTMIN(2)
-      GSEDIMR(D%NIB:D%NIE,D%NKTB:D%NKTE) =                            &
-          PRRS(D%NIB:D%NIE,D%NKTB:D%NKTE)>ZRTMIN(3)
-      GSEDIMI(D%NIB:D%NIE,D%NKTB:D%NKTE) =                            &
-          PRIS(D%NIB:D%NIE,D%NKTB:D%NKTE)>ZRTMIN(4)
-      GSEDIMS(D%NIB:D%NIE,D%NKTB:D%NKTE) =                            &
-          PRSS(D%NIB:D%NIE,D%NKTB:D%NKTE)>ZRTMIN(5)
-      GSEDIMG(D%NIB:D%NIE,D%NKTB:D%NKTE) =                            &
-          PRGS(D%NIB:D%NIE,D%NKTB:D%NKTE)>ZRTMIN(6)
-      IF ( KRR == 7 ) GSEDIMH(D%NIB:D%NIE,D%NKTB:D%NKTE) =            &
-                          PRHS(D%NIB:D%NIE,D%NKTB:D%NKTE)>ZRTMIN(7)
+      IF (OSEDIC) GSEDIMC(D%NIJB:D%NIJE,D%NKTB:D%NKTE) =                &
+                      PRCS(D%NIJB:D%NIJE,D%NKTB:D%NKTE)>ZRTMIN(2)
+      GSEDIMR(D%NIJB:D%NIJE,D%NKTB:D%NKTE) =                            &
+          PRRS(D%NIJB:D%NIJE,D%NKTB:D%NKTE)>ZRTMIN(3)
+      GSEDIMI(D%NIJB:D%NIJE,D%NKTB:D%NKTE) =                            &
+          PRIS(D%NIJB:D%NIJE,D%NKTB:D%NKTE)>ZRTMIN(4)
+      GSEDIMS(D%NIJB:D%NIJE,D%NKTB:D%NKTE) =                            &
+          PRSS(D%NIJB:D%NIJE,D%NKTB:D%NKTE)>ZRTMIN(5)
+      GSEDIMG(D%NIJB:D%NIJE,D%NKTB:D%NKTE) =                            &
+          PRGS(D%NIJB:D%NIJE,D%NKTB:D%NKTE)>ZRTMIN(6)
+      IF ( KRR == 7 ) GSEDIMH(D%NIJB:D%NIJE,D%NKTB:D%NKTE) =            &
+                          PRHS(D%NIJB:D%NIJE,D%NKTB:D%NKTE)>ZRTMIN(7)
 !
       IF (OSEDIC) CALL  COUNTJV(ISEDIMC, GSEDIMC(:,:),IC1(:),IC2(:))
       CALL COUNTJV(ISEDIMR, GSEDIMR(:,:),IR1(:),IR2(:))
@@ -524,14 +524,14 @@ MODULE MODE_RAIN_ICE_OLD_SEDIMENTATION_SPLIT
     INTEGER, INTENT(OUT) :: IC
     LOGICAL, DIMENSION(:,:), INTENT(IN) :: LTAB ! Mask
     INTEGER, DIMENSION(:), INTENT(OUT) :: I1,I2 ! Used to replace the COUNT and PACK
-    INTEGER :: JI,JK
+    INTEGER :: JIJ,JK
 
     IC = 0
     DO JK = 1,SIZE(LTAB,2)
-      DO JI = 1,SIZE(LTAB,1)
-        IF(LTAB(JI,JK)) THEN
+      DO JIJ = 1,SIZE(LTAB,1)
+        IF(LTAB(JIJ,JK)) THEN
           IC = IC +1
-          I1(IC) = JI
+          I1(IC) = JIJ
           I2(IC) = JK
         END IF
       END DO

@@ -41,11 +41,11 @@ MODULE MODE_RAIN_ICE_OLD_FAST_RH
     INTEGER, INTENT(IN) :: KSIZE
     INTEGER, INTENT(IN) :: KRR
 
-    LOGICAL, DIMENSION(D%NIT,D%NKT), INTENT(IN) :: GMICRO ! Layer thickness (m)
+    LOGICAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN) :: GMICRO ! Layer thickness (m)
 
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRHODJ ! Dry density * Jacobian
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRHODJ ! Dry density * Jacobian
 
-    REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PTHS   ! Theta source
+    REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PTHS   ! Theta source
 
     REAL, DIMENSION(KSIZE), INTENT(IN)    :: PRVT     ! Water vapor m.r. at t
     REAL, DIMENSION(KSIZE), INTENT(IN)    :: PRCT     ! Cloud water m.r. at t
