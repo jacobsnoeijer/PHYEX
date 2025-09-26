@@ -47,6 +47,7 @@ TYPE NEB_t
   CHARACTER(LEN=80)  :: CCONDENS      !< subrgrid condensation PDF
   CHARACTER(LEN=4)   :: CLAMBDA3      !< lambda3 choice for subgrid cloud scheme
   LOGICAL            :: LSTATNW       !< updated full statistical cloud scheme
+  LOGICAL            :: LTAUCONV      !< new convection time scale
   LOGICAL            :: LVARRESDEP    !< extra variance term (VSIGQSAT) is made grid size dependent
   LOGICAL            :: LSIGMAS       !< Switch for using Sigma_s from turbulence scheme
   LOGICAL            :: LSUBG_COND    !< Switch for subgrid condensation 
@@ -65,13 +66,14 @@ REAL, POINTER :: VSIGQSAT=>NULL()
 CHARACTER(LEN=80),POINTER :: CCONDENS=>NULL()
 CHARACTER(LEN=4),POINTER :: CLAMBDA3=>NULL()
 LOGICAL, POINTER :: LSTATNW=>NULL()
+LOGICAL, POINTER :: LTAUCONV=>NULL()
 LOGICAL, POINTER :: LVARRESDEP=>NULL()
 LOGICAL, POINTER :: LSIGMAS=>NULL()
 LOGICAL, POINTER :: LSUBG_COND=>NULL()
 LOGICAL, POINTER :: LCONDBORN=>NULL()
 !
 NAMELIST/NAM_NEBn/XTMINMIX, XTMAXMIX, LHGT_QS, CFRAC_ICE_ADJUST, CFRAC_ICE_SHALLOW_MF, &
-                 &VSIGQSAT, CCONDENS, CLAMBDA3, LSTATNW, LVARRESDEP, LSIGMAS, LSUBG_COND, LCONDBORN
+                 &VSIGQSAT, CCONDENS, CLAMBDA3, LSTATNW, LVARRESDEP, LTAUCONV, LSIGMAS, LSUBG_COND, LCONDBORN
 !
 !-------------------------------------------------------------------------------
 !
@@ -96,6 +98,7 @@ IF(.NOT. ASSOCIATED(NEBN, NEB_MODEL(KTO))) THEN
   CCONDENS => NEBN%CCONDENS
   CLAMBDA3 => NEBN%CLAMBDA3
   LSTATNW => NEBN%LSTATNW
+  LTAUCONV => NEBN%LTAUCONV
   LVARRESDEP => NEBN%LVARRESDEP
   LSIGMAS => NEBN%LSIGMAS
   LSUBG_COND => NEBN%LSUBG_COND
@@ -190,6 +193,7 @@ IF(LLDEFAULTVAL) THEN
   LCONDBORN=.FALSE.
   LSIGMAS   =.TRUE.
   LSTATNW=.FALSE.
+  LTAUCONV=.FALSE.
   LVARRESDEP=.FALSE.
 
   IF(HPROGRAM=='AROME') THEN
